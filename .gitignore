@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Output
+out/
+
+# Logs
+*.log
+
+# Build artifacts
+dist/
+.remotion/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+
+# Test images (created during development)
+issue-images/

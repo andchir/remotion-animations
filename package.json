@@ -1,0 +1,35 @@
+{
+  "name": "remotion-animations",
+  "version": "1.0.0",
+  "description": "A library of ready-made animations for Remotion",
+  "scripts": {
+    "start": "npx remotion studio src/index.ts",
+    "build": "npx remotion bundle src/index.ts --public-dir public",
+    "render": "npx remotion render src/index.ts SubscribeButton out/subscribe-button.webm --codec vp9 --pixel-format yuva420p",
+    "render:gif": "npx remotion render src/index.ts SubscribeButton out/subscribe-button.gif --codec gif",
+    "render:mp4": "npx remotion render src/index.ts SubscribeButton out/subscribe-button.mp4 --codec h264 --pixel-format yuv420p",
+    "upgrade": "npx remotion upgrade",
+    "typecheck": "npx tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andchir/remotion-animations.git"
+  },
+  "keywords": ["remotion", "animation", "youtube", "subscribe"],
+  "author": "andchir",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andchir/remotion-animations/issues"
+  },
+  "homepage": "https://github.com/andchir/remotion-animations#readme",
+  "dependencies": {
+    "@remotion/bundler": "^4.0.407",
+    "@remotion/cli": "^4.0.407",
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "remotion": "^4.0.407",
+    "typescript": "^5.9.3"
+  }
+}
