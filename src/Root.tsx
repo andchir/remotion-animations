@@ -9,8 +9,8 @@ export const Root: React.FC = () => {
         component={SubscribeButtonAnimation}
         durationInFrames={120}
         fps={30}
-        width={520}
-        height={235}
+        width={1920}
+        height={1080}
         defaultProps={{}}
       />
     </>
