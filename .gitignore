@@ -27,3 +27,6 @@ Thumbs.db
 
 # Test images (created during development)
 issue-images/
+
+# AI solver metadata
+CLAUDE.md
