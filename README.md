@@ -2,7 +2,7 @@
 
 A library of ready-made animations for Remotion.
 
-Remotion documentations:  
+Remotion documentation:  
 https://gist.github.com/ThariqS/3d446e7c7aa9eb94f468194deb73028f
 
 ## Available Animations
