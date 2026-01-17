@@ -44,7 +44,7 @@ const Star: React.FC<{
     },
   });
 
-  const distance = progress * (80 + random(seed + "-dist") * 40);
+  const distance = progress * (296 + random(seed + "-dist") * 148);
   const starX = x + Math.cos(angle) * distance;
   const starY = y + Math.sin(angle) * distance;
 
@@ -59,7 +59,7 @@ const Star: React.FC<{
   });
 
   const rotation = random(seed + "-rot") * 360;
-  const size = 8 + random(seed + "-size") * 6;
+  const size = 30 + random(seed + "-size") * 22;
 
   // Generate random color for each star
   const colors = ["#FFD700", "#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#98D8C8", "#F7DC6F", "#BB8FCE"];
@@ -109,8 +109,8 @@ const BellIcon: React.FC<{ shaking: boolean }> = ({ shaking }) => {
 
   return (
     <svg
-      width="24"
-      height="24"
+      width="88"
+      height="88"
       viewBox="0 0 24 24"
       fill="none"
       style={{
@@ -129,7 +129,7 @@ const BellIcon: React.FC<{ shaking: boolean }> = ({ shaking }) => {
 
 // Arrow Cursor component
 const ArrowCursor: React.FC = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <svg width="88" height="88" viewBox="0 0 24 24" fill="none">
     <path
       d="M4 2L4 20L8.5 15.5L12 22L15 21L11.5 14L18 14L4 2Z"
       fill="white"
@@ -141,7 +141,7 @@ const ArrowCursor: React.FC = () => (
 
 // Hand/Pointer Cursor component
 const HandCursor: React.FC = () => (
-  <svg width="32" height="32" viewBox="0 0 256 256">
+  <svg width="118" height="118" viewBox="0 0 256 256">
     <g>
       <path
         style={{
@@ -227,10 +227,10 @@ const SubscribeButton: React.FC<{ clicked: boolean }> = ({ clicked }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        gap: "12px",
+        gap: "44px",
         backgroundColor,
-        borderRadius: "24px",
-        padding: "12px 24px",
+        borderRadius: "88px",
+        padding: "44px 88px",
         transform: `scale(${scale})`,
         transition: clicked ? "background-color 0.1s" : undefined,
       }}
@@ -238,10 +238,10 @@ const SubscribeButton: React.FC<{ clicked: boolean }> = ({ clicked }) => {
       <span
         style={{
           color: "white",
-          fontSize: "24px",
+          fontSize: "88px",
           fontWeight: "bold",
           fontFamily: "Arial, sans-serif",
-          letterSpacing: "0.5px",
+          letterSpacing: "2px",
         }}
       >
         SUBSCRIBE
@@ -261,9 +261,9 @@ export const SubscribeButtonAnimation: React.FC = () => {
 
   // Cursor position animation
   const cursorStartX = width / 2;
-  const cursorStartY = height + 30;
-  const cursorEndX = buttonCenterX + 20;
-  const cursorEndY = buttonCenterY + 10;
+  const cursorStartY = height + 111;
+  const cursorEndX = buttonCenterX + 74;
+  const cursorEndY = buttonCenterY + 37;
 
   const moveProgress = spring({
     fps,
@@ -302,7 +302,7 @@ export const SubscribeButtonAnimation: React.FC = () => {
   // Click animation (small downward movement)
   let clickOffsetY = 0;
   if (frame >= TIMING.CLICK_FRAME && frame < TIMING.CLICK_FRAME + 5) {
-    clickOffsetY = interpolate(frame, [TIMING.CLICK_FRAME, TIMING.CLICK_FRAME + 2, TIMING.CLICK_FRAME + 5], [0, 3, 0], {
+    clickOffsetY = interpolate(frame, [TIMING.CLICK_FRAME, TIMING.CLICK_FRAME + 2, TIMING.CLICK_FRAME + 5], [0, 11, 0], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     });
@@ -348,7 +348,7 @@ export const SubscribeButtonAnimation: React.FC = () => {
           position: "absolute",
           left: cursorX,
           top: cursorY + clickOffsetY,
-          transform: "translate(-2px, -2px)",
+          transform: "translate(-7px, -7px)",
           zIndex: 100,
         }}
       >
