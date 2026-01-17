@@ -229,7 +229,7 @@ const SubscribeButton: React.FC<{ clicked: boolean }> = ({ clicked }) => {
         justifyContent: "center",
         gap: "44px",
         backgroundColor,
-        borderRadius: "88px",
+        borderRadius: "40px",
         padding: "44px 88px",
         transform: `scale(${scale})`,
         transition: clicked ? "background-color 0.1s" : undefined,
