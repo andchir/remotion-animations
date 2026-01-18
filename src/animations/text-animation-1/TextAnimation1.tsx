@@ -37,7 +37,7 @@ export const TextAnimation1: React.FC = () => {
   const textOpacity = frame >= TIMING.TEXT_APPEAR ? 1 : 0;
 
   // Text content
-  const nameText = "ISLA KING";
+  const nameText = "JOHN DOE";
   const jobText = "ENGINEER";
 
   // Position in bottom left corner
