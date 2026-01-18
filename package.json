@@ -8,6 +8,9 @@
     "render": "npx remotion render src/index.ts SubscribeButton out/subscribe-button.webm --codec vp9 --pixel-format yuva420p",
     "render:gif": "npx remotion render src/index.ts SubscribeButton out/subscribe-button.gif --codec gif",
     "render:mp4": "npx remotion render src/index.ts SubscribeButton out/subscribe-button.mp4 --codec h264 --pixel-format yuv420p",
+    "render:isla-king": "npx remotion render src/index.ts IslaKing out/isla-king.webm --codec vp9 --pixel-format yuva420p",
+    "render:isla-king:gif": "npx remotion render src/index.ts IslaKing out/isla-king.gif --codec gif",
+    "render:isla-king:mp4": "npx remotion render src/index.ts IslaKing out/isla-king.mp4 --codec h264 --pixel-format yuv420p",
     "upgrade": "npx remotion upgrade",
     "typecheck": "npx tsc --noEmit"
   },
