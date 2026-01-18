@@ -1,6 +1,6 @@
 import { Composition } from "remotion";
 import { SubscribeButtonAnimation } from "./animations/subscribe-button/SubscribeButtonAnimation";
-import { IslaKingAnimation } from "./animations/isla-king/IslaKingAnimation";
+import { TextAnimation1 } from "./animations/text-animation-1/TextAnimation1";
 
 export const Root: React.FC = () => {
   return (
@@ -15,8 +15,8 @@ export const Root: React.FC = () => {
         defaultProps={{}}
       />
       <Composition
-        id="IslaKing"
-        component={IslaKingAnimation}
+        id="TextAnimation1"
+        component={TextAnimation1}
         durationInFrames={180}
         fps={30}
         width={1920}

@@ -16,7 +16,7 @@ const TIMING = {
   HOLD_END: 180, // Animation ends (6 seconds total)
 };
 
-export const IslaKingAnimation: React.FC = () => {
+export const TextAnimation1: React.FC = () => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
 
@@ -64,7 +64,7 @@ export const IslaKingAnimation: React.FC = () => {
   );
 
   // Text reveal effect - shows characters progressively
-  const fullNameText = "ISLA KING";
+  const fullNameText = "JOHN DOE";
   const visibleNameChars = Math.floor(nameProgress * fullNameText.length);
   const displayName = fullNameText.substring(0, visibleNameChars);
 
