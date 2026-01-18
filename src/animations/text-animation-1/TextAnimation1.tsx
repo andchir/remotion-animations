@@ -72,28 +72,35 @@ export const TextAnimation1: React.FC = () => {
   const visibleJobChars = Math.floor(jobProgress * fullJobText.length);
   const displayJob = fullJobText.substring(0, visibleJobChars);
 
-  // Position at bottom-left
-  const leftPosition = 117; // ~117px from left
-  const bottomPosition = height - 650; // ~650px from bottom
+  // Center position on screen
+  const centerX = width / 2;
+  const centerY = height / 2;
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "transparent" }}>
+    <AbsoluteFill
+      style={{
+        backgroundColor: "transparent",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       {/* Name box - white background with black text */}
       <div
         style={{
-          position: "absolute",
-          left: leftPosition + nameSlideX,
-          top: bottomPosition,
+          transform: `translateX(${nameSlideX}px)`,
           backgroundColor: "white",
-          padding: "12px 24px",
+          padding: "16px 32px",
           display: "inline-block",
           opacity: nameProgress > 0 ? 1 : 0,
+          marginBottom: "12px",
         }}
       >
         <div
           style={{
             fontFamily: "Arial, sans-serif",
-            fontSize: "48px",
+            fontSize: "72px",
             fontWeight: "bold",
             color: "black",
             letterSpacing: "2px",
@@ -111,11 +118,9 @@ export const TextAnimation1: React.FC = () => {
       {/* Job title box - orange background with white text */}
       <div
         style={{
-          position: "absolute",
-          left: leftPosition + jobSlideX,
-          top: bottomPosition + 72, // Below the name box
+          transform: `translateX(${jobSlideX}px)`,
           backgroundColor: "#FF8C00", // Orange color
-          padding: "8px 24px",
+          padding: "12px 32px",
           display: "inline-block",
           opacity: jobProgress > 0 ? 1 : 0,
         }}
@@ -123,7 +128,7 @@ export const TextAnimation1: React.FC = () => {
         <div
           style={{
             fontFamily: "Arial, sans-serif",
-            fontSize: "36px",
+            fontSize: "54px",
             fontWeight: "bold",
             color: "white",
             letterSpacing: "2px",
