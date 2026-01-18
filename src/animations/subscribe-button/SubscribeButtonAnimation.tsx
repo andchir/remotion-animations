@@ -59,7 +59,7 @@ const Star: React.FC<{
   });
 
   const rotation = random(seed + "-rot") * 360;
-  const size = 30 + random(seed + "-size") * 22;
+  const size = 60 + random(seed + "-size") * 44;
 
   // Generate random color for each star
   const colors = ["#FFD700", "#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#98D8C8", "#F7DC6F", "#BB8FCE"];
