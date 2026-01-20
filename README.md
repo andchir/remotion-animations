@@ -95,6 +95,8 @@ remotion-animations/
 
 ## Adding New Animations
 
+### Manual Creation
+
 1. Create a new folder in `src/animations/` for your animation
 2. Create your animation component using Remotion hooks:
    - `useCurrentFrame()` - get current frame number
@@ -103,6 +105,15 @@ remotion-animations/
    - `spring()` - physics-based animations
 3. Register the composition in `src/Root.tsx`
 4. Add render scripts to `package.json` if needed
+
+### Using Claude Code Skills
+
+This project includes Claude Code skills to help create animations:
+
+- **`text-animation-copier`**: Copy text animations from video examples
+- **`video-viewing`**: Download and analyze videos for animation reference
+
+See [claude-skills/README.md](claude-skills/README.md) for detailed documentation on using these skills with Claude Code.
 
 ## Development
 
