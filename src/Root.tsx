@@ -3,6 +3,7 @@ import { SubscribeButtonAnimation } from "./animations/subscribe-button/Subscrib
 import { TextAnimation1 } from "./animations/text-animation-1/TextAnimation1";
 import { TextAnimation2 } from "./animations/text-animation-2/TextAnimation2";
 import { TextAnimation3 } from "./animations/text-animation-3/TextAnimation3";
+import { TextAnimation4 } from "./animations/text-animation-4/TextAnimation4";
 
 export const Root: React.FC = () => {
   return (
@@ -37,6 +38,15 @@ export const Root: React.FC = () => {
       <Composition
         id="TextAnimation3"
         component={TextAnimation3}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+      <Composition
+        id="TextAnimation4"
+        component={TextAnimation4}
         durationInFrames={180}
         fps={30}
         width={1920}
