@@ -9,76 +9,84 @@ import {
 
 // Animation timing configuration (in frames, at 30fps)
 const TIMING = {
-  // Phase 1: Entrance - rectangles slide in and assemble
   ENTRANCE_START: 0,
-  ENTRANCE_DURATION: 60, // 2 seconds
-
-  // Phase 2: Hold - subtle pulsing effect
-  HOLD_START: 60,
-  HOLD_DURATION: 60, // 2 seconds
-
-  // Phase 3: Exit - rectangles split and slide out
-  EXIT_START: 120,
-  EXIT_DURATION: 60, // 2 seconds
+  ENTRANCE_DURATION: 70,
+  HOLD_START: 70,
+  HOLD_DURATION: 60,
+  EXIT_START: 130,
+  EXIT_DURATION: 50,
 };
 
-// Configuration constants
+// Text configuration
 const MAIN_TEXT = "YOU TEXT HERE";
 const SUBTITLE_TEXT = "Your caption here";
 
-// Rectangle colors - vibrant gradient palette
-const RECTANGLE_COLORS = [
-  "#FF6B6B", // Coral Red
-  "#4ECDC4", // Turquoise
-  "#45B7D1", // Sky Blue
-  "#FFA07A", // Light Salmon
-  "#98D8C8", // Mint
-];
+// Visual configuration
+const COLORS = ["#6366F1", "#8B5CF6", "#EC4899", "#F59E0B", "#10B981"];
 
-const FONT_SIZE_MAIN = 92;
-const FONT_SIZE_SUBTITLE = 42;
 const FONT_FAMILY = "Arial, Helvetica, sans-serif";
 const FONT_WEIGHT_MAIN = "900";
-const FONT_WEIGHT_SUBTITLE = "700";
+const FONT_WEIGHT_SUBTITLE = "600";
+const FONT_SIZE_MAIN = 120;
+const FONT_SIZE_SUBTITLE = 48;
 
-// Rectangle configuration
-const RECT_WIDTH = 420;
-const RECT_HEIGHT = 200;
-const RECT_SPACING = 20;
+// Padding around text inside rectangles
+const RECT_PADDING_X = 40;
+const RECT_PADDING_Y = 30;
 
-interface RectangleProps {
-  index: number;
-  frame: number;
-  fps: number;
+interface TextBoxProps {
+  text: string;
+  fontSize: number;
+  fontWeight: string;
   color: string;
+  frame: number;
+  index: number;
+  totalBoxes: number;
+  yOffset: number;
 }
 
-const Rectangle: React.FC<RectangleProps> = ({ index, frame, fps, color }) => {
-  // Determine entry direction based on index
-  const entryDirections = [
-    { x: -1, y: 0 },  // From left
-    { x: 1, y: 0 },   // From right
-    { x: 0, y: -1 },  // From top
-    { x: 0, y: 1 },   // From bottom
-    { x: -1, y: -1 }, // From top-left
-  ];
+const TextBox: React.FC<TextBoxProps> = ({
+  text,
+  fontSize,
+  fontWeight,
+  color,
+  frame,
+  index,
+  totalBoxes,
+  yOffset,
+}) => {
+  // Calculate text dimensions (approximate)
+  const charWidth = fontSize * 0.6;
+  const textWidth = text.length * charWidth;
+  const boxWidth = textWidth + RECT_PADDING_X * 2;
+  const boxHeight = fontSize + RECT_PADDING_Y * 2;
 
-  const direction = entryDirections[index % entryDirections.length];
-  const delay = index * 8;
+  // Stagger delay for each box
+  const delay = index * 5;
 
-  // Entrance animation
+  // ENTRANCE: Boxes fly in from random directions with rotation
   const entranceProgress = interpolate(
     frame,
-    [TIMING.ENTRANCE_START + delay, TIMING.ENTRANCE_START + delay + 40],
+    [TIMING.ENTRANCE_START + delay, TIMING.ENTRANCE_START + delay + 50],
     [0, 1],
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-      easing: Easing.out(Easing.cubic),
+      easing: Easing.out(Easing.exp),
     }
   );
 
-  // Exit animation
+  // Random entry angles for variety
+  const entryAngles = [
+    { x: -2000, y: -1000, rot: -180 },
+    { x: 2000, y: -800, rot: 180 },
+    { x: -1800, y: 1000, rot: 270 },
+    { x: 1500, y: -1200, rot: 90 },
+    { x: 0, y: -1500, rot: 360 },
+  ];
+  const entryAngle = entryAngles[index % entryAngles.length];
+
+  // EXIT: Boxes scatter in different directions
   const exitProgress = interpolate(
     frame,
     [TIMING.EXIT_START + delay, TIMING.EXIT_START + delay + 40],
@@ -86,75 +94,125 @@ const Rectangle: React.FC<RectangleProps> = ({ index, frame, fps, color }) => {
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-      easing: Easing.in(Easing.cubic),
+      easing: Easing.in(Easing.exp),
     }
   );
 
-  // Hold phase - subtle breathing effect
-  const breathingScale = interpolate(
-    Math.sin(((frame - TIMING.HOLD_START + index * 10) / 30) * Math.PI),
-    [-1, 1],
-    [0.98, 1.02]
-  );
+  const exitAngles = [
+    { x: 1800, y: 1200, rot: 180 },
+    { x: -2000, y: 1000, rot: -180 },
+    { x: 1500, y: -1000, rot: 270 },
+    { x: -1700, y: -900, rot: -270 },
+    { x: 0, y: 1500, rot: 360 },
+  ];
+  const exitAngle = exitAngles[index % exitAngles.length];
 
-  // Calculate position offsets
-  const entryOffsetX = direction.x * 1500;
-  const entryOffsetY = direction.y * 1000;
-  const exitOffsetX = -direction.x * 1500;
-  const exitOffsetY = -direction.y * 1000;
-
-  // Position calculations
+  // Position calculation
   const translateX =
     frame < TIMING.HOLD_START
-      ? interpolate(entranceProgress, [0, 1], [entryOffsetX, 0])
+      ? interpolate(entranceProgress, [0, 1], [entryAngle.x, 0])
       : frame < TIMING.EXIT_START
       ? 0
-      : interpolate(exitProgress, [0, 1], [0, exitOffsetX]);
+      : interpolate(exitProgress, [0, 1], [0, exitAngle.x]);
 
   const translateY =
     frame < TIMING.HOLD_START
-      ? interpolate(entranceProgress, [0, 1], [entryOffsetY, 0])
+      ? interpolate(entranceProgress, [0, 1], [entryAngle.y, 0])
       : frame < TIMING.EXIT_START
       ? 0
-      : interpolate(exitProgress, [0, 1], [0, exitOffsetY]);
+      : interpolate(exitProgress, [0, 1], [0, exitAngle.y]);
 
-  // Scale
+  // Rotation
+  const rotation =
+    frame < TIMING.HOLD_START
+      ? interpolate(entranceProgress, [0, 1], [entryAngle.rot, 0])
+      : frame < TIMING.EXIT_START
+      ? 0
+      : interpolate(exitProgress, [0, 1], [0, exitAngle.rot]);
+
+  // HOLD: Subtle wave motion
+  const waveOffset =
+    frame >= TIMING.HOLD_START && frame < TIMING.EXIT_START
+      ? Math.sin((frame - TIMING.HOLD_START + index * 8) / 15) * 10
+      : 0;
+
+  const waveRotation =
+    frame >= TIMING.HOLD_START && frame < TIMING.EXIT_START
+      ? Math.sin((frame - TIMING.HOLD_START + index * 10) / 20) * 2
+      : 0;
+
+  // Scale animation
   const scale =
     frame < TIMING.HOLD_START
-      ? interpolate(entranceProgress, [0, 1], [0.3, 1])
+      ? interpolate(entranceProgress, [0, 1], [0.2, 1])
       : frame < TIMING.EXIT_START
-      ? breathingScale
+      ? interpolate(
+          Math.sin((frame - TIMING.HOLD_START + index * 5) / 25),
+          [-1, 1],
+          [0.98, 1.02]
+        )
       : interpolate(exitProgress, [0, 1], [1, 0.3]);
 
   // Opacity
   const opacity =
     frame < TIMING.HOLD_START
-      ? interpolate(entranceProgress, [0, 0.5, 1], [0, 0.7, 1])
+      ? interpolate(entranceProgress, [0, 0.7, 1], [0, 0.8, 1])
       : frame < TIMING.EXIT_START
       ? 1
       : interpolate(exitProgress, [0, 1], [1, 0]);
 
-  // Rotation during entrance and exit
-  const rotation =
-    frame < TIMING.HOLD_START
-      ? interpolate(entranceProgress, [0, 1], [45, 0])
-      : frame < TIMING.EXIT_START
-      ? 0
-      : interpolate(exitProgress, [0, 1], [0, -45]);
+  const uniqueId = `text-${index}-${text.replace(/\s/g, "")}`;
 
   return (
     <div
       style={{
         position: "absolute",
-        width: `${RECT_WIDTH}px`,
-        height: `${RECT_HEIGHT}px`,
-        backgroundColor: color,
-        transform: `translate(${translateX}px, ${translateY}px) scale(${scale}) rotate(${rotation}deg)`,
+        transform: `translate(${translateX}px, ${translateY + yOffset + waveOffset}px) rotate(${rotation + waveRotation}deg) scale(${scale})`,
         opacity: opacity,
         transformOrigin: "center center",
-        boxShadow: "0 10px 40px rgba(0, 0, 0, 0.3)",
       }}
-    />
+    >
+      <svg
+        width={boxWidth}
+        height={boxHeight}
+        style={{
+          filter: "drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3))",
+        }}
+      >
+        <defs>
+          <clipPath id={uniqueId}>
+            <text
+              x={boxWidth / 2}
+              y={boxHeight / 2}
+              textAnchor="middle"
+              dominantBaseline="central"
+              fontFamily={FONT_FAMILY}
+              fontSize={fontSize}
+              fontWeight={fontWeight}
+            >
+              {text}
+            </text>
+          </clipPath>
+        </defs>
+
+        {/* Rectangle with text clipped out */}
+        <rect
+          width={boxWidth}
+          height={boxHeight}
+          fill={color}
+          rx={15}
+          ry={15}
+        />
+
+        {/* White text showing through the clip path (inverted) */}
+        <rect
+          width={boxWidth}
+          height={boxHeight}
+          fill="white"
+          clipPath={`url(#${uniqueId})`}
+        />
+      </svg>
+    </div>
   );
 };
 
@@ -162,49 +220,13 @@ export const TextAnimation4: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Text entrance - slight delay after rectangles start
-  const textEntranceProgress = interpolate(
-    frame,
-    [TIMING.ENTRANCE_START + 25, TIMING.ENTRANCE_START + 55],
-    [0, 1],
-    {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-      easing: Easing.out(Easing.back(1.2)),
-    }
-  );
-
-  // Text exit
-  const textExitProgress = interpolate(
-    frame,
-    [TIMING.EXIT_START, TIMING.EXIT_START + 35],
-    [0, 1],
-    {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-      easing: Easing.in(Easing.cubic),
-    }
-  );
-
-  // Text opacity
-  const textOpacity =
-    frame < TIMING.EXIT_START
-      ? interpolate(textEntranceProgress, [0, 0.6, 1], [0, 0.7, 1])
-      : interpolate(textExitProgress, [0, 1], [1, 0]);
-
-  // Text scale
-  const textScale =
-    frame < TIMING.HOLD_START
-      ? interpolate(textEntranceProgress, [0, 1], [0.5, 1])
-      : frame < TIMING.EXIT_START
-      ? 1
-      : interpolate(textExitProgress, [0, 1], [1, 1.3]);
-
-  // Subtle text animation during hold
-  const textFloat =
-    frame >= TIMING.HOLD_START && frame < TIMING.EXIT_START
-      ? Math.sin((frame - TIMING.HOLD_START) / 20) * 5
-      : 0;
+  // Split main text into words
+  const mainWords = MAIN_TEXT.split(" ");
+  const mainBoxes = mainWords.map((word, index) => ({
+    text: word,
+    color: COLORS[index % COLORS.length],
+    index: index,
+  }));
 
   return (
     <AbsoluteFill
@@ -216,7 +238,7 @@ export const TextAnimation4: React.FC = () => {
         overflow: "hidden",
       }}
     >
-      {/* Rectangles layer */}
+      {/* Main text boxes */}
       <div
         style={{
           position: "absolute",
@@ -225,20 +247,25 @@ export const TextAnimation4: React.FC = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          gap: "25px",
         }}
       >
-        {RECTANGLE_COLORS.map((color, index) => (
-          <Rectangle
-            key={index}
-            index={index}
+        {mainBoxes.map((box, idx) => (
+          <TextBox
+            key={`main-${idx}`}
+            text={box.text}
+            fontSize={FONT_SIZE_MAIN}
+            fontWeight={FONT_WEIGHT_MAIN}
+            color={box.color}
             frame={frame}
-            fps={fps}
-            color={color}
+            index={box.index}
+            totalBoxes={mainBoxes.length}
+            yOffset={-60}
           />
         ))}
       </div>
 
-      {/* Text layer with cut-out effect using mix-blend-mode */}
+      {/* Subtitle - single box */}
       <div
         style={{
           position: "absolute",
@@ -247,50 +274,18 @@ export const TextAnimation4: React.FC = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          mixBlendMode: "difference",
-          transform: `translateY(${textFloat}px) scale(${textScale})`,
-          opacity: textOpacity,
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "30px",
-          }}
-        >
-          {/* Main text */}
-          <div
-            style={{
-              fontFamily: FONT_FAMILY,
-              fontSize: `${FONT_SIZE_MAIN}px`,
-              fontWeight: FONT_WEIGHT_MAIN,
-              color: "#FFFFFF",
-              letterSpacing: "8px",
-              textAlign: "center",
-              textTransform: "uppercase",
-              filter: "brightness(2)",
-            }}
-          >
-            {MAIN_TEXT}
-          </div>
-
-          {/* Subtitle text */}
-          <div
-            style={{
-              fontFamily: FONT_FAMILY,
-              fontSize: `${FONT_SIZE_SUBTITLE}px`,
-              fontWeight: FONT_WEIGHT_SUBTITLE,
-              color: "#FFFFFF",
-              letterSpacing: "4px",
-              textAlign: "center",
-              filter: "brightness(2)",
-            }}
-          >
-            {SUBTITLE_TEXT}
-          </div>
-        </div>
+        <TextBox
+          text={SUBTITLE_TEXT}
+          fontSize={FONT_SIZE_SUBTITLE}
+          fontWeight={FONT_WEIGHT_SUBTITLE}
+          color={COLORS[mainBoxes.length % COLORS.length]}
+          frame={frame}
+          index={mainBoxes.length}
+          totalBoxes={mainBoxes.length + 1}
+          yOffset={90}
+        />
       </div>
     </AbsoluteFill>
   );
