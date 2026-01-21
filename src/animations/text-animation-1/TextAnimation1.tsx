@@ -29,8 +29,6 @@ const SUBTITLE_TEXT = "Your caption here";
 // Styling constants
 const MAIN_TEXT_COLOR = "#FFFFFF";
 const SUBTITLE_TEXT_COLOR = "#FFD700"; // Gold color
-const BACKGROUND_GRADIENT_START = "#1a1a2e";
-const BACKGROUND_GRADIENT_END = "#16213e";
 
 const FONT_SIZE_MAIN = 72;
 const FONT_SIZE_SUBTITLE = 32;
@@ -155,7 +153,7 @@ export const TextAnimation1: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        background: `linear-gradient(135deg, ${BACKGROUND_GRADIENT_START} 0%, ${BACKGROUND_GRADIENT_END} 100%)`,
+        backgroundColor: "transparent",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
