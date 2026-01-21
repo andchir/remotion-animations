@@ -47,6 +47,7 @@ interface TextBlockProps {
   frame: number;
   index: number;
   totalBlocks: number;
+  xPosition: number;
   yPosition: number;
 }
 
@@ -58,6 +59,7 @@ const TextBlock: React.FC<TextBlockProps> = ({
   frame,
   index,
   totalBlocks,
+  xPosition,
   yPosition,
 }) => {
   // Estimate text width based on character count and font size
@@ -142,7 +144,7 @@ const TextBlock: React.FC<TextBlockProps> = ({
     : entranceSlideX;
 
   const finalRotateY = entranceRotateY + exitRotateY + holdWobble;
-  const finalTranslateX = exitSlideX;
+  const finalTranslateX = xPosition + exitSlideX;
   const finalTranslateY = yPosition + holdFloat;
   const finalScale = exitScale;
   const finalOpacity = exitOpacity;
@@ -289,26 +291,18 @@ export const TextAnimation5: React.FC = () => {
           const bgColor = COLORS[colorKeys[colorIndex]];
 
           return (
-            <div
+            <TextBlock
               key={`main-${wordIndex}`}
-              style={{
-                position: "absolute",
-                left: `calc(50% + ${xOffset}px)`,
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-            >
-              <TextBlock
-                text={word}
-                fontSize={FONT_SIZE_MAIN}
-                fontWeight={FONT_WEIGHT_MAIN}
-                backgroundColor={bgColor}
-                frame={frame}
-                index={wordIndex}
-                totalBlocks={totalWords + 1}
-                yPosition={-50}
-              />
-            </div>
+              text={word}
+              fontSize={FONT_SIZE_MAIN}
+              fontWeight={FONT_WEIGHT_MAIN}
+              backgroundColor={bgColor}
+              frame={frame}
+              index={wordIndex}
+              totalBlocks={totalWords + 1}
+              xPosition={xOffset}
+              yPosition={-50}
+            />
           );
         })}
 
@@ -321,6 +315,7 @@ export const TextAnimation5: React.FC = () => {
           frame={frame}
           index={mainWords.length}
           totalBlocks={mainWords.length + 1}
+          xPosition={0}
           yPosition={80}
         />
       </div>

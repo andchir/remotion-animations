@@ -42,6 +42,7 @@ interface TextBoxProps {
   frame: number;
   index: number;
   totalBoxes: number;
+  xPosition: number;
   yOffset: number;
 }
 
@@ -53,6 +54,7 @@ const TextBox: React.FC<TextBoxProps> = ({
   frame,
   index,
   totalBoxes,
+  xPosition,
   yOffset,
 }) => {
   // Calculate text dimensions (approximate)
@@ -110,10 +112,10 @@ const TextBox: React.FC<TextBoxProps> = ({
   // Position calculation
   const translateX =
     frame < TIMING.HOLD_START
-      ? interpolate(entranceProgress, [0, 1], [entryAngle.x, 0])
+      ? interpolate(entranceProgress, [0, 1], [entryAngle.x, xPosition])
       : frame < TIMING.EXIT_START
-      ? 0
-      : interpolate(exitProgress, [0, 1], [0, exitAngle.x]);
+      ? xPosition
+      : interpolate(exitProgress, [0, 1], [xPosition, exitAngle.x]);
 
   const translateY =
     frame < TIMING.HOLD_START
@@ -167,7 +169,9 @@ const TextBox: React.FC<TextBoxProps> = ({
     <div
       style={{
         position: "absolute",
-        transform: `translate(${translateX}px, ${translateY + yOffset + waveOffset}px) rotate(${rotation + waveRotation}deg) scale(${scale})`,
+        left: "50%",
+        top: "50%",
+        transform: `translate(-50%, -50%) translateX(${translateX}px) translateY(${translateY + yOffset + waveOffset}px) rotate(${rotation + waveRotation}deg) scale(${scale})`,
         opacity: opacity,
         transformOrigin: "center center",
       }}
@@ -241,39 +245,41 @@ export const TextAnimation4: React.FC = () => {
       {/* Main text boxes */}
       <div
         style={{
-          position: "absolute",
+          position: "relative",
           width: "100%",
           height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "25px",
         }}
       >
-        {mainBoxes.map((box, idx) => (
-          <TextBox
-            key={`main-${idx}`}
-            text={box.text}
-            fontSize={FONT_SIZE_MAIN}
-            fontWeight={FONT_WEIGHT_MAIN}
-            color={box.color}
-            frame={frame}
-            index={box.index}
-            totalBoxes={mainBoxes.length}
-            yOffset={-60}
-          />
-        ))}
+        {mainBoxes.map((box, idx) => {
+          // Calculate horizontal offset to arrange words in a row
+          const totalWords = mainBoxes.length;
+          const wordSpacing = 350; // Spacing between word centers
+          const totalWidth = (totalWords - 1) * wordSpacing;
+          const xOffset = -totalWidth / 2 + idx * wordSpacing;
+
+          return (
+            <TextBox
+              key={`main-${idx}`}
+              text={box.text}
+              fontSize={FONT_SIZE_MAIN}
+              fontWeight={FONT_WEIGHT_MAIN}
+              color={box.color}
+              frame={frame}
+              index={box.index}
+              totalBoxes={mainBoxes.length}
+              xPosition={xOffset}
+              yOffset={-60}
+            />
+          );
+        })}
       </div>
 
       {/* Subtitle - single box */}
       <div
         style={{
-          position: "absolute",
+          position: "relative",
           width: "100%",
           height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
         }}
       >
         <TextBox
@@ -284,6 +290,7 @@ export const TextAnimation4: React.FC = () => {
           frame={frame}
           index={mainBoxes.length}
           totalBoxes={mainBoxes.length + 1}
+          xPosition={0}
           yOffset={90}
         />
       </div>
