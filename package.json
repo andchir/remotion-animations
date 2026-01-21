@@ -17,6 +17,9 @@
     "render:text-animation-4": "npx remotion render src/index.ts TextAnimation4 out/text-animation-4.webm --codec vp9 --pixel-format yuva420p",
     "render:text-animation-4:gif": "npx remotion render src/index.ts TextAnimation4 out/text-animation-4.gif --codec gif",
     "render:text-animation-4:mp4": "npx remotion render src/index.ts TextAnimation4 out/text-animation-4.mp4 --codec h264 --pixel-format yuv420p",
+    "render:text-animation-5": "npx remotion render src/index.ts TextAnimation5 out/text-animation-5.webm --codec vp9 --pixel-format yuva420p",
+    "render:text-animation-5:gif": "npx remotion render src/index.ts TextAnimation5 out/text-animation-5.gif --codec gif",
+    "render:text-animation-5:mp4": "npx remotion render src/index.ts TextAnimation5 out/text-animation-5.mp4 --codec h264 --pixel-format yuv420p",
     "upgrade": "npx remotion upgrade",
     "typecheck": "npx tsc --noEmit"
   },
