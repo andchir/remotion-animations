@@ -280,31 +280,49 @@ export const TextAnimation5: React.FC = () => {
         }}
       >
         {/* Render each word as a separate block */}
-        {mainWords.map((word, wordIndex) => {
-          // Calculate horizontal offset to arrange words in a row
-          const totalWords = mainWords.length;
-          const wordSpacing = 220; // Spacing between word centers
-          const totalWidth = (totalWords - 1) * wordSpacing;
-          const xOffset = -totalWidth / 2 + wordIndex * wordSpacing;
+        {(() => {
+          // Calculate block widths for each word
+          const estimatedCharWidth = FONT_SIZE_MAIN * 0.58;
+          const wordGap = 25; // Gap between word blocks
 
-          const colorIndex = wordIndex % colorKeys.length;
-          const bgColor = COLORS[colorKeys[colorIndex]];
+          const wordBlockWidths = mainWords.map((word) => {
+            const textWidth = word.length * estimatedCharWidth;
+            return textWidth + PADDING_X * 2;
+          });
 
-          return (
-            <TextBlock
-              key={`main-${wordIndex}`}
-              text={word}
-              fontSize={FONT_SIZE_MAIN}
-              fontWeight={FONT_WEIGHT_MAIN}
-              backgroundColor={bgColor}
-              frame={frame}
-              index={wordIndex}
-              totalBlocks={totalWords + 1}
-              xPosition={xOffset}
-              yPosition={-50}
-            />
-          );
-        })}
+          // Calculate total width including gaps
+          const totalBlockWidth = wordBlockWidths.reduce((sum, w) => sum + w, 0);
+          const totalGapWidth = (mainWords.length - 1) * wordGap;
+          const totalWidth = totalBlockWidth + totalGapWidth;
+
+          // Calculate x positions for each word (center-based)
+          let currentX = -totalWidth / 2;
+          const xPositions = wordBlockWidths.map((blockWidth) => {
+            const xCenter = currentX + blockWidth / 2;
+            currentX += blockWidth + wordGap;
+            return xCenter;
+          });
+
+          return mainWords.map((word, wordIndex) => {
+            const colorIndex = wordIndex % colorKeys.length;
+            const bgColor = COLORS[colorKeys[colorIndex]];
+
+            return (
+              <TextBlock
+                key={`main-${wordIndex}`}
+                text={word}
+                fontSize={FONT_SIZE_MAIN}
+                fontWeight={FONT_WEIGHT_MAIN}
+                backgroundColor={bgColor}
+                frame={frame}
+                index={wordIndex}
+                totalBlocks={mainWords.length + 1}
+                xPosition={xPositions[wordIndex]}
+                yPosition={-50}
+              />
+            );
+          });
+        })()}
 
         {/* Subtitle block */}
         <TextBlock
