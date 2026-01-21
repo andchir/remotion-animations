@@ -8,18 +8,18 @@ import {
 } from "remotion";
 
 // Animation timing configuration (in frames, at 30fps)
-// Reference video time range: 00:07 - 00:13 (6 seconds)
 const TIMING = {
-  // Phase 1: Bars start appearing
-  BAR_START: 0,
-  BAR_FILL_DURATION: 30, // ~1 second for bars to fill
+  // Phase 1: Entrance - text flies in and reveals
+  ENTRANCE_START: 0,
+  ENTRANCE_DURATION: 60, // 2 seconds
 
-  // Phase 2: Text appears after bars start filling
-  TEXT_START: 10, // Text starts appearing shortly after bars start
-  TEXT_DURATION: 30, // ~1 second for text to fully appear
+  // Phase 2: Hold - text stays visible
+  HOLD_START: 60,
+  HOLD_DURATION: 60, // 2 seconds
 
-  // Phase 3: Hold the text visible
-  HOLD_END: 180, // Total animation duration: 6 seconds
+  // Phase 3: Exit - text fades and disappears
+  EXIT_START: 120,
+  EXIT_DURATION: 60, // 2 seconds
 };
 
 // Configuration constants
@@ -27,164 +27,181 @@ const MAIN_TEXT = "YOU TEXT HERE";
 const SUBTITLE_TEXT = "Your caption here";
 
 // Styling constants
-const MAIN_TEXT_COLOR = "#000000"; // Black text
-const MAIN_BG_COLOR = "#FFFFFF"; // White background
-const SUBTITLE_TEXT_COLOR = "#FFFFFF"; // White text
-const SUBTITLE_BG_COLOR = "#FF8C00"; // Orange background
+const MAIN_TEXT_COLOR = "#FFFFFF";
+const SUBTITLE_TEXT_COLOR = "#FFD700"; // Gold color
+const BACKGROUND_GRADIENT_START = "#1a1a2e";
+const BACKGROUND_GRADIENT_END = "#16213e";
 
-const FONT_SIZE_MAIN = 36;
-const FONT_SIZE_SUBTITLE = 20;
-const FONT_FAMILY = "Arial, sans-serif";
-const FONT_WEIGHT = "bold";
-
-const PADDING_HORIZONTAL = 16;
-const PADDING_VERTICAL = 8;
-const GAP_BETWEEN_LINES = 4;
-
-// Position from bottom-left
-const POSITION_LEFT = 40;
-const POSITION_BOTTOM = 80;
+const FONT_SIZE_MAIN = 72;
+const FONT_SIZE_SUBTITLE = 32;
+const FONT_FAMILY = "Arial, Helvetica, sans-serif";
+const FONT_WEIGHT_MAIN = "900";
+const FONT_WEIGHT_SUBTITLE = "600";
 
 export const TextAnimation1: React.FC = () => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
 
-  // Calculate bar fill progress (0 to 1)
-  const barProgress = interpolate(
+  // Entrance animation progress (0 to 1)
+  const entranceProgress = interpolate(
     frame,
-    [TIMING.BAR_START, TIMING.BAR_START + TIMING.BAR_FILL_DURATION],
+    [TIMING.ENTRANCE_START, TIMING.ENTRANCE_START + TIMING.ENTRANCE_DURATION],
     [0, 1],
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-      easing: Easing.out(Easing.cubic),
+      easing: Easing.out(Easing.back(1.5)), // Bounce effect
     }
   );
 
-  // Calculate how many characters to show (progressive reveal)
-  const mainTextProgress = interpolate(
+  // Exit animation progress (0 to 1)
+  const exitProgress = interpolate(
     frame,
-    [TIMING.TEXT_START, TIMING.TEXT_START + TIMING.TEXT_DURATION],
+    [TIMING.EXIT_START, TIMING.EXIT_START + TIMING.EXIT_DURATION],
     [0, 1],
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-      easing: Easing.out(Easing.quad),
+      easing: Easing.in(Easing.cubic),
     }
   );
 
-  const subtitleProgress = interpolate(
+  // Hold phase - subtle floating animation
+  const floatOffset = interpolate(
     frame,
-    [TIMING.TEXT_START + 5, TIMING.TEXT_START + TIMING.TEXT_DURATION + 5],
-    [0, 1],
+    [TIMING.HOLD_START, TIMING.HOLD_START + TIMING.HOLD_DURATION],
+    [0, 10],
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-      easing: Easing.out(Easing.quad),
+      easing: Easing.inOut(Easing.ease),
     }
   );
 
-  // Calculate visible text
-  const mainCharsToShow = Math.floor(mainTextProgress * MAIN_TEXT.length);
-  const subtitleCharsToShow = Math.floor(subtitleProgress * SUBTITLE_TEXT.length);
+  // Calculate overall opacity
+  const opacity = frame < TIMING.EXIT_START
+    ? interpolate(entranceProgress, [0, 0.3], [0, 1], { extrapolateRight: "clamp" })
+    : interpolate(exitProgress, [0, 1], [1, 0]);
 
-  const visibleMainText = MAIN_TEXT.substring(0, mainCharsToShow);
-  const visibleSubtitleText = SUBTITLE_TEXT.substring(0, subtitleCharsToShow);
+  // Calculate Y position for entrance and exit
+  const translateY =
+    frame < TIMING.HOLD_START
+      ? interpolate(entranceProgress, [0, 1], [-200, 0]) // Entrance from top
+      : frame < TIMING.EXIT_START
+      ? Math.sin((frame - TIMING.HOLD_START) / 15) * floatOffset // Floating during hold
+      : interpolate(exitProgress, [0, 1], [0, 200]); // Exit to bottom
 
-  // Calculate approximate text widths (for bar width)
-  const mainTextWidth = MAIN_TEXT.length * (FONT_SIZE_MAIN * 0.6);
-  const subtitleTextWidth = SUBTITLE_TEXT.length * (FONT_SIZE_SUBTITLE * 0.6);
+  // Calculate scale
+  const scale =
+    frame < TIMING.HOLD_START
+      ? interpolate(entranceProgress, [0, 1], [0.3, 1])
+      : frame < TIMING.EXIT_START
+      ? 1
+      : interpolate(exitProgress, [0, 1], [1, 0.3]);
+
+  // Calculate rotation
+  const rotation =
+    frame < TIMING.HOLD_START
+      ? interpolate(entranceProgress, [0, 1], [180, 0])
+      : frame < TIMING.EXIT_START
+      ? 0
+      : interpolate(exitProgress, [0, 1], [0, -90]);
+
+  // Letter stagger effect for main text during entrance
+  const renderStaggeredText = (text: string, fontSize: number, color: string, isMain: boolean) => {
+    return text.split("").map((char, index) => {
+      const charDelay = index * 2; // Delay each character by 2 frames
+      const charProgress = interpolate(
+        frame,
+        [TIMING.ENTRANCE_START + charDelay, TIMING.ENTRANCE_START + charDelay + 20],
+        [0, 1],
+        {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+          easing: Easing.out(Easing.quad),
+        }
+      );
+
+      const charOpacity = frame < TIMING.EXIT_START
+        ? charProgress
+        : interpolate(exitProgress, [0, 1], [1, 0]);
+
+      const charScale = frame < TIMING.HOLD_START
+        ? interpolate(charProgress, [0, 1], [0, 1])
+        : frame < TIMING.EXIT_START
+        ? 1
+        : interpolate(exitProgress, [0, 1], [1, 0.5]);
+
+      const charTranslateY = frame < TIMING.HOLD_START
+        ? interpolate(charProgress, [0, 1], [50, 0])
+        : 0;
+
+      return (
+        <span
+          key={index}
+          style={{
+            display: "inline-block",
+            opacity: charOpacity,
+            transform: `translateY(${charTranslateY}px) scale(${charScale})`,
+            transition: "transform 0.1s ease-out",
+          }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </span>
+      );
+    });
+  };
 
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: "transparent",
+        background: `linear-gradient(135deg, ${BACKGROUND_GRADIENT_START} 0%, ${BACKGROUND_GRADIENT_END} 100%)`,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      {/* Container for both text lines */}
+      {/* Main container for both text lines */}
       <div
         style={{
-          position: "absolute",
-          left: POSITION_LEFT,
-          bottom: POSITION_BOTTOM,
           display: "flex",
           flexDirection: "column",
-          gap: `${GAP_BETWEEN_LINES}px`,
+          alignItems: "center",
+          gap: "20px",
+          transform: `translateY(${translateY}px) scale(${scale}) rotate(${rotation}deg)`,
+          opacity: opacity,
+          transformOrigin: "center center",
         }}
       >
-        {/* Main text line with white background */}
+        {/* Main text */}
         <div
           style={{
-            position: "relative",
-            display: "inline-block",
+            fontFamily: FONT_FAMILY,
+            fontSize: `${FONT_SIZE_MAIN}px`,
+            fontWeight: FONT_WEIGHT_MAIN,
+            color: MAIN_TEXT_COLOR,
+            letterSpacing: "4px",
+            textShadow: "0 4px 20px rgba(0, 0, 0, 0.5)",
+            textAlign: "center",
           }}
         >
-          {/* White background bar */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              height: FONT_SIZE_MAIN + PADDING_VERTICAL * 2,
-              width: `${(mainTextWidth + PADDING_HORIZONTAL * 2) * barProgress}px`,
-              backgroundColor: MAIN_BG_COLOR,
-              zIndex: 0,
-            }}
-          />
-
-          {/* Main text */}
-          <div
-            style={{
-              position: "relative",
-              fontFamily: FONT_FAMILY,
-              fontSize: `${FONT_SIZE_MAIN}px`,
-              fontWeight: FONT_WEIGHT,
-              color: MAIN_TEXT_COLOR,
-              padding: `${PADDING_VERTICAL}px ${PADDING_HORIZONTAL}px`,
-              zIndex: 1,
-              letterSpacing: "1px",
-            }}
-          >
-            {visibleMainText}
-          </div>
+          {renderStaggeredText(MAIN_TEXT, FONT_SIZE_MAIN, MAIN_TEXT_COLOR, true)}
         </div>
 
-        {/* Subtitle text line with orange background */}
+        {/* Subtitle text */}
         <div
           style={{
-            position: "relative",
-            display: "inline-block",
+            fontFamily: FONT_FAMILY,
+            fontSize: `${FONT_SIZE_SUBTITLE}px`,
+            fontWeight: FONT_WEIGHT_SUBTITLE,
+            color: SUBTITLE_TEXT_COLOR,
+            letterSpacing: "2px",
+            textShadow: "0 2px 10px rgba(0, 0, 0, 0.5)",
+            textAlign: "center",
+            textTransform: "lowercase",
           }}
         >
-          {/* Orange background bar */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              height: FONT_SIZE_SUBTITLE + PADDING_VERTICAL * 2,
-              width: `${(subtitleTextWidth + PADDING_HORIZONTAL * 2) * barProgress}px`,
-              backgroundColor: SUBTITLE_BG_COLOR,
-              zIndex: 0,
-            }}
-          />
-
-          {/* Subtitle text */}
-          <div
-            style={{
-              position: "relative",
-              fontFamily: FONT_FAMILY,
-              fontSize: `${FONT_SIZE_SUBTITLE}px`,
-              fontWeight: FONT_WEIGHT,
-              color: SUBTITLE_TEXT_COLOR,
-              padding: `${PADDING_VERTICAL}px ${PADDING_HORIZONTAL}px`,
-              zIndex: 1,
-              letterSpacing: "0.5px",
-              textTransform: "uppercase",
-            }}
-          >
-            {visibleSubtitleText}
-          </div>
+          {renderStaggeredText(SUBTITLE_TEXT, FONT_SIZE_SUBTITLE, SUBTITLE_TEXT_COLOR, false)}
         </div>
       </div>
     </AbsoluteFill>
