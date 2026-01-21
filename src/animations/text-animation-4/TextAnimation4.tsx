@@ -250,14 +250,30 @@ export const TextAnimation4: React.FC = () => {
           height: "100%",
         }}
       >
-        {mainBoxes.map((box, idx) => {
-          // Calculate horizontal offset to arrange words in a row
-          const totalWords = mainBoxes.length;
-          const wordSpacing = 350; // Spacing between word centers
-          const totalWidth = (totalWords - 1) * wordSpacing;
-          const xOffset = -totalWidth / 2 + idx * wordSpacing;
+        {(() => {
+          // Calculate box widths for each word
+          const charWidth = FONT_SIZE_MAIN * 0.6;
+          const wordGap = 25; // Gap between word boxes
 
-          return (
+          const wordBoxWidths = mainBoxes.map((box) => {
+            const textWidth = box.text.length * charWidth;
+            return textWidth + RECT_PADDING_X * 2;
+          });
+
+          // Calculate total width including gaps
+          const totalBoxWidth = wordBoxWidths.reduce((sum, w) => sum + w, 0);
+          const totalGapWidth = (mainBoxes.length - 1) * wordGap;
+          const totalWidth = totalBoxWidth + totalGapWidth;
+
+          // Calculate x positions for each word (center-based)
+          let currentX = -totalWidth / 2;
+          const xPositions = wordBoxWidths.map((boxWidth) => {
+            const xCenter = currentX + boxWidth / 2;
+            currentX += boxWidth + wordGap;
+            return xCenter;
+          });
+
+          return mainBoxes.map((box, idx) => (
             <TextBox
               key={`main-${idx}`}
               text={box.text}
@@ -267,11 +283,11 @@ export const TextAnimation4: React.FC = () => {
               frame={frame}
               index={box.index}
               totalBoxes={mainBoxes.length}
-              xPosition={xOffset}
+              xPosition={xPositions[idx]}
               yOffset={-60}
             />
-          );
-        })}
+          ));
+        })()}
       </div>
 
       {/* Subtitle - single box */}
