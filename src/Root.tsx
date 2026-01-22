@@ -5,6 +5,7 @@ import { TextAnimation2 } from "./animations/text-animation-2/TextAnimation2";
 import { TextAnimation3 } from "./animations/text-animation-3/TextAnimation3";
 import { TextAnimation4 } from "./animations/text-animation-4/TextAnimation4";
 import { TextAnimation5 } from "./animations/text-animation-5/TextAnimation5";
+import { LowerThird1 } from "./animations/lower-third-1/LowerThird1";
 
 export const Root: React.FC = () => {
   return (
@@ -57,6 +58,15 @@ export const Root: React.FC = () => {
       <Composition
         id="TextAnimation5"
         component={TextAnimation5}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+      <Composition
+        id="LowerThird1"
+        component={LowerThird1}
         durationInFrames={180}
         fps={30}
         width={1920}
