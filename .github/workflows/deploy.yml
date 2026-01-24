@@ -31,7 +31,7 @@ jobs:
         run: npm ci
 
       - name: Build static site
-        run: npx remotion bundle src/index.ts --out-dir dist
+        run: npx remotion bundle src/index.ts --out-dir dist --public-path="./"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
