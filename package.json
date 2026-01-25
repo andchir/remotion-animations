@@ -23,6 +23,12 @@
     "render:lower-third-1": "npx remotion render src/index.ts LowerThird1 out/lower-third-1.webm --codec vp9 --pixel-format yuva420p",
     "render:lower-third-1:gif": "npx remotion render src/index.ts LowerThird1 out/lower-third-1.gif --codec gif",
     "render:lower-third-1:mp4": "npx remotion render src/index.ts LowerThird1 out/lower-third-1.mp4 --codec h264 --pixel-format yuv420p",
+    "render:lower-third-2": "npx remotion render src/index.ts LowerThird2 out/lower-third-2.webm --codec vp9 --pixel-format yuva420p",
+    "render:lower-third-2:gif": "npx remotion render src/index.ts LowerThird2 out/lower-third-2.gif --codec gif",
+    "render:lower-third-2:mp4": "npx remotion render src/index.ts LowerThird2 out/lower-third-2.mp4 --codec h264 --pixel-format yuv420p",
+    "render:lower-third-3": "npx remotion render src/index.ts LowerThird3 out/lower-third-3.webm --codec vp9 --pixel-format yuva420p",
+    "render:lower-third-3:gif": "npx remotion render src/index.ts LowerThird3 out/lower-third-3.gif --codec gif",
+    "render:lower-third-3:mp4": "npx remotion render src/index.ts LowerThird3 out/lower-third-3.mp4 --codec h264 --pixel-format yuv420p",
     "upgrade": "npx remotion upgrade",
     "typecheck": "npx tsc --noEmit"
   },

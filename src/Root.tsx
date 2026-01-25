@@ -7,6 +7,7 @@ import { TextAnimation4 } from "./animations/text-animation-4/TextAnimation4";
 import { TextAnimation5 } from "./animations/text-animation-5/TextAnimation5";
 import { LowerThird1 } from "./animations/lower-third-1/LowerThird1";
 import { LowerThird2 } from "./animations/lower-third-2/LowerThird2";
+import { LowerThird3 } from "./animations/lower-third-3/LowerThird3";
 
 export const Root: React.FC = () => {
   return (
@@ -77,6 +78,15 @@ export const Root: React.FC = () => {
       <Composition
         id="LowerThird2"
         component={LowerThird2}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+      <Composition
+        id="LowerThird3"
+        component={LowerThird3}
         durationInFrames={180}
         fps={30}
         width={1920}
