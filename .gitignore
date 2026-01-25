@@ -8,6 +8,7 @@ out/
 *.log
 
 # Build artifacts
+build/
 dist/
 .remotion/
 
