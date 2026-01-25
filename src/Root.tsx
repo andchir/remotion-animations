@@ -9,6 +9,7 @@ import { LowerThird1 } from "./animations/lower-third-1/LowerThird1";
 import { LowerThird2 } from "./animations/lower-third-2/LowerThird2";
 import { LowerThird3 } from "./animations/lower-third-3/LowerThird3";
 import { LowerThird4 } from "./animations/lower-third-4/LowerThird4";
+import { LowerThird5 } from "./animations/lower-third-5/LowerThird5";
 
 export const Root: React.FC = () => {
   return (
@@ -97,6 +98,15 @@ export const Root: React.FC = () => {
       <Composition
         id="LowerThird4"
         component={LowerThird4}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+      <Composition
+        id="LowerThird5"
+        component={LowerThird5}
         durationInFrames={180}
         fps={30}
         width={1920}
