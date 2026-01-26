@@ -11,6 +11,7 @@ import { LowerThird3 } from "./animations/lower-third-3/LowerThird3";
 import { LowerThird4 } from "./animations/lower-third-4/LowerThird4";
 import { LowerThird5 } from "./animations/lower-third-5/LowerThird5";
 import { LowerThird6 } from "./animations/lower-third-6/LowerThird6";
+import { LowerThird7 } from "./animations/lower-third-7/LowerThird7";
 
 export const Root: React.FC = () => {
   return (
@@ -245,6 +246,27 @@ export const Root: React.FC = () => {
       <Composition
         id="LowerThird6"
         component={LowerThird6}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird7 - Flat paper-fold lower third with coral/sunset theme
+        - Modern flat design with warm coral, orange, and yellow colors
+        - Paper fold-in effect with 3D perspective during entrance
+        - Two-card layout (name and title) with staggered reveal
+        - Decorative circle accent and vertical bar
+        - Gentle shadow pulse and horizontal shift during hold
+        - Small pulsing dots decoration at the top
+        - Paper fold-back and slide-away exit animation
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird7"
+        component={LowerThird7}
         durationInFrames={180}
         fps={30}
         width={1920}
