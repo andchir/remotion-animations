@@ -10,6 +10,7 @@ import { LowerThird2 } from "./animations/lower-third-2/LowerThird2";
 import { LowerThird3 } from "./animations/lower-third-3/LowerThird3";
 import { LowerThird4 } from "./animations/lower-third-4/LowerThird4";
 import { LowerThird5 } from "./animations/lower-third-5/LowerThird5";
+import { LowerThird6 } from "./animations/lower-third-6/LowerThird6";
 
 export const Root: React.FC = () => {
   return (
@@ -222,6 +223,28 @@ export const Root: React.FC = () => {
       <Composition
         id="LowerThird5"
         component={LowerThird5}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird6 - Minimalist split-line lower third with emerald theme
+        - Clean minimalist design with emerald-mint gradient accents
+        - Horizontal divider line expands from center outward
+        - Text reveals by sliding up through overflow mask
+        - Left vertical accent bracket with gradient
+        - Right decorative pulsing dots
+        - Subtle breathing scale and shimmer effects during hold
+        - Center accent dot on divider line
+        - Text slides down and line retracts on exit
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird6"
+        component={LowerThird6}
         durationInFrames={180}
         fps={30}
         width={1920}
