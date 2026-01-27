@@ -13,6 +13,7 @@ import { LowerThird5 } from "./animations/lower-third-5/LowerThird5";
 import { LowerThird6 } from "./animations/lower-third-6/LowerThird6";
 import { LowerThird7 } from "./animations/lower-third-7/LowerThird7";
 import { LowerThird8 } from "./animations/lower-third-8/LowerThird8";
+import { LowerThird9 } from "./animations/lower-third-9/LowerThird9";
 
 export const Root: React.FC = () => {
   return (
@@ -290,6 +291,28 @@ export const Root: React.FC = () => {
       <Composition
         id="LowerThird8"
         component={LowerThird8}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird9 - Industrial steel lower third with electric blue accents
+        - Modern flat design with steel gray blocks and sharp corners (no rounded edges)
+        - Vertical electric blue accent line drops in from top on entrance
+        - Primary and secondary blocks slide in from left with staggered timing
+        - Metallic sheen sweep effect across blocks during hold
+        - Small indicator blocks on the right with pulse animation
+        - Bottom and top accent lines with gradient fade
+        - Electric blue glow pulse on accent elements during hold
+        - Blocks slide out to right sequentially on exit
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird9"
+        component={LowerThird9}
         durationInFrames={180}
         fps={30}
         width={1920}
