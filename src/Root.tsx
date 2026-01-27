@@ -12,6 +12,7 @@ import { LowerThird4 } from "./animations/lower-third-4/LowerThird4";
 import { LowerThird5 } from "./animations/lower-third-5/LowerThird5";
 import { LowerThird6 } from "./animations/lower-third-6/LowerThird6";
 import { LowerThird7 } from "./animations/lower-third-7/LowerThird7";
+import { LowerThird8 } from "./animations/lower-third-8/LowerThird8";
 
 export const Root: React.FC = () => {
   return (
@@ -267,6 +268,28 @@ export const Root: React.FC = () => {
       <Composition
         id="LowerThird7"
         component={LowerThird7}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird8 - Sliding tiles lower third with ribbon accent and purple/magenta theme
+        - Modern flat design with vibrant purple and magenta colors
+        - Primary and secondary tiles slide in from left with staggered timing
+        - Decorative gradient ribbon slides across the bottom
+        - Decorative dots on left side with pulse animation
+        - Subtle gradient shift and elevation pulse during hold
+        - Ribbon shimmer effect during hold phase
+        - Corner diamond accent element
+        - Tiles slide out to right with fade on exit
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird8"
+        component={LowerThird8}
         durationInFrames={180}
         fps={30}
         width={1920}
