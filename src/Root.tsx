@@ -14,6 +14,7 @@ import { LowerThird6 } from "./animations/lower-third-6/LowerThird6";
 import { LowerThird7 } from "./animations/lower-third-7/LowerThird7";
 import { LowerThird8 } from "./animations/lower-third-8/LowerThird8";
 import { LowerThird9 } from "./animations/lower-third-9/LowerThird9";
+import { LowerThird10 } from "./animations/lower-third-10/LowerThird10";
 
 export const Root: React.FC = () => {
   return (
@@ -313,6 +314,28 @@ export const Root: React.FC = () => {
       <Composition
         id="LowerThird9"
         component={LowerThird9}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird10 - Segmented reveal lower third with electric blue theme
+        - Modern flat design with sharp corners and geometric segments (no rounded edges)
+        - Three horizontal strips slide in from different directions with staggered timing
+        - Vertical electric blue accent bar drops in from top with gradient
+        - Text reveals through sliding panels with gradient overlay effect
+        - Horizontal and vertical accent lines with pulse animations during hold
+        - Corner accent squares with dynamic glow effects
+        - Moving gradient overlay sweeps across the composition during hold phase
+        - Strips disassemble and slide away in reverse order on exit
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird10"
+        component={LowerThird10}
         durationInFrames={180}
         fps={30}
         width={1920}
