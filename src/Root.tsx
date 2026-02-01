@@ -15,6 +15,7 @@ import { LowerThird7 } from "./animations/lower-third-7/LowerThird7";
 import { LowerThird8 } from "./animations/lower-third-8/LowerThird8";
 import { LowerThird9 } from "./animations/lower-third-9/LowerThird9";
 import { LowerThird10 } from "./animations/lower-third-10/LowerThird10";
+import { LowerThird11 } from "./animations/lower-third-11/LowerThird11";
 
 export const Root: React.FC = () => {
   return (
@@ -336,6 +337,29 @@ export const Root: React.FC = () => {
       <Composition
         id="LowerThird10"
         component={LowerThird10}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird11 - Sliding bracket lower third with deep crimson corporate theme
+        - Modern flat design with sharp corners and geometric L-shaped brackets (no rounded edges)
+        - Two L-brackets slide in from opposite corners (top-left and bottom-right) and lock into place
+        - Horizontal divider line extends from left between primary and secondary text
+        - Text reveals by sliding up through overflow mask with staggered timing
+        - Small accent marker squares with blinking pulse animation during hold
+        - Scan line effect sweeps vertically through the bracket area during hold phase
+        - Bracket glow and divider pulse effects during hold
+        - Subtle dark background fill between brackets
+        - Brackets unlock and slide away to opposite corners on exit
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird11"
+        component={LowerThird11}
         durationInFrames={180}
         fps={30}
         width={1920}
