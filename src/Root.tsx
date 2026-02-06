@@ -16,6 +16,9 @@ import { LowerThird8 } from "./animations/lower-third-8/LowerThird8";
 import { LowerThird9 } from "./animations/lower-third-9/LowerThird9";
 import { LowerThird10 } from "./animations/lower-third-10/LowerThird10";
 import { LowerThird11 } from "./animations/lower-third-11/LowerThird11";
+import { LowerThird12 } from "./animations/lower-third-12/LowerThird12";
+import { LowerThird13 } from "./animations/lower-third-13/LowerThird13";
+import { LowerThird14 } from "./animations/lower-third-14/LowerThird14";
 
 export const Root: React.FC = () => {
   return (
@@ -360,6 +363,75 @@ export const Root: React.FC = () => {
       <Composition
         id="LowerThird11"
         component={LowerThird11}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird12 - Terminal typewriter lower third with green-on-dark theme
+        - Modern flat design with terminal/code-inspired aesthetic (no rounded edges)
+        - Vertical pipeline bar slides down on entrance with green gradient glow
+        - Primary and secondary text appear with typewriter character-by-character effect
+        - Prompt symbol ">" precedes each text line for terminal feel
+        - Blinking cursor follows text during typing and hold phases
+        - Horizontal scan lines extend from pipeline with data stream dot effects during hold
+        - Small accent tick marks along pipeline bar with staggered pulse animation
+        - Pipeline glow and text glow pulse effects during hold phase
+        - Text erases in reverse on exit, pipeline retracts upward
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird12"
+        component={LowerThird12}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird13 - Diamond accent lower third with golden amber theme
+        - Modern flat design with geometric diamond motifs (no rounded edges)
+        - Main diamond accent scales in from center with back-ease spring effect
+        - Horizontal gold lines extend from diamond to frame text area
+        - Text reveals with horizontal clip mask animation from left to right
+        - End diamond appears at top line terminus with pulse animation
+        - Thin vertical connector line links top and bottom lines
+        - Gold shimmer sweep effect glides across text area during hold
+        - Diamond rotates subtly and glows during hold phase
+        - Small decorative diamonds along bottom line with staggered pulse
+        - Lines retract, text clips closed, diamonds shrink on exit
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird13"
+        component={LowerThird13}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird14 - Stacked bars lower third with teal/mint theme
+        - Modern flat design with alternating horizontal bars (no rounded edges)
+        - Four bars slide in from alternating directions (left/right) with staggered timing
+        - Left vertical accent bar drops down with teal gradient glow
+        - Text reveals by sliding up through overflow mask between stacked bars
+        - Corner accent squares at top-left and bottom-right with pulse animation
+        - Small tick marks along vertical accent bar with staggered glow
+        - Bars glow and shimmer sweep effect during hold phase
+        - Bars retract in alternating directions on exit
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird14"
+        component={LowerThird14}
         durationInFrames={180}
         fps={30}
         width={1920}
