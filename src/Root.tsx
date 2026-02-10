@@ -19,6 +19,9 @@ import { LowerThird11 } from "./animations/lower-third-11/LowerThird11";
 import { LowerThird12 } from "./animations/lower-third-12/LowerThird12";
 import { LowerThird13 } from "./animations/lower-third-13/LowerThird13";
 import { LowerThird14 } from "./animations/lower-third-14/LowerThird14";
+import { LowerThird15 } from "./animations/lower-third-15/LowerThird15";
+import { LowerThird16 } from "./animations/lower-third-16/LowerThird16";
+import { LowerThird17 } from "./animations/lower-third-17/LowerThird17";
 
 export const Root: React.FC = () => {
   return (
@@ -427,11 +430,64 @@ export const Root: React.FC = () => {
         - Small tick marks along vertical accent bar with staggered glow
         - Bars glow and shimmer sweep effect during hold phase
         - Bars retract in alternating directions on exit
+         Duration: 6 seconds (180 frames at 30fps)
+      */}
+
+      {/*
+        LowerThird15 - Split panel reveal with diagonal design
+        - Modern flat design with two-tone diagonal panels (no rounded edges)
+        - Left orange panel and right blue panel slide from opposite sides with diagonal split
+        - Yellow accent line extends across the composition
+        - Text reveals with staggered timing as panels lock into place
+        - Subtle floating motion during hold phase
+        - Panels slide apart and fade on exit in reverse entrance pattern
         Duration: 6 seconds (180 frames at 30fps)
       */}
       <Composition
-        id="LowerThird14"
-        component={LowerThird14}
+        id="LowerThird15"
+        component={LowerThird15}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird16 - Progressive circuit board build
+        - Modern flat design with circuit-board aesthetic (no rounded edges)
+        - Background panel with slanted edge scales in during entrance
+        - Circuit lines progressively build with staggered timing (cyan and pink)
+        - Yellow node points pulse at line intersections
+        - Data flow animation moves through circuit during hold phase
+        - Text reveals after circuit build completes
+        - Lines and nodes disassemble in reverse order on exit
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird16"
+        component={LowerThird16}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird17 - 3D cube rotation with grid pattern
+        - Modern flat design with 3D geometric elements (no rounded edges)
+        - Grid pattern forms progressively with pulsing intersection nodes
+        - 3D cube faces rotate in from left during entrance with spring easing
+        - Subtle cube rotation continues during hold phase
+        - Text reveals as cube settles into position
+        - Cube rotates out and grid dissolves on exit
+        - Purple, red, and teal cube faces with dark gray grid lines
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird17"
+        component={LowerThird17}
         durationInFrames={180}
         fps={30}
         width={1920}
