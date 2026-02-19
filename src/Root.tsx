@@ -22,6 +22,8 @@ import { LowerThird14 } from "./animations/lower-third-14/LowerThird14";
 import { LowerThird15 } from "./animations/lower-third-15/LowerThird15";
 import { LowerThird16 } from "./animations/lower-third-16/LowerThird16";
 import { LowerThird17 } from "./animations/lower-third-17/LowerThird17";
+import { LowerThird18 } from "./animations/lower-third-18/LowerThird18";
+import { LowerThird19 } from "./animations/lower-third-19/LowerThird19";
 
 export const Root: React.FC = () => {
   return (
@@ -488,6 +490,50 @@ export const Root: React.FC = () => {
       <Composition
         id="LowerThird17"
         component={LowerThird17}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird18 - Spotlight reveal with warm orange theme
+        - Circular spotlight gradient effect that expands from center
+        - Secondary pulsing ring accent for depth
+        - Angled background bar with clip-path for modern look
+        - Character-by-character staggered text reveal
+        - Animated shimmer effect on accent underline during hold
+        - Decorative corner accent and small dot decorations
+        - Spotlight collapses and fades on exit
+        - Warm orange/coral color scheme with dark background
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird18"
+        component={LowerThird18}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird19 - Liquid morphing blobs with vibrant gradients
+        - Three organic blob shapes that morph and float with fluid motion
+        - Gradual blob appearance with scale and morph animations
+        - Continuous organic morphing during hold phase (border-radius animation)
+        - Pink, purple, and blue gradient blobs with screen blend mode
+        - Character-by-character staggered text reveal
+        - Golden accent line with gradient
+        - Floating particle effects around blobs
+        - Smooth collapse and fade on exit
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird19"
+        component={LowerThird19}
         durationInFrames={180}
         fps={30}
         width={1920}
