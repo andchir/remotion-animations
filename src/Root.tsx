@@ -24,6 +24,7 @@ import { LowerThird16 } from "./animations/lower-third-16/LowerThird16";
 import { LowerThird17 } from "./animations/lower-third-17/LowerThird17";
 import { LowerThird18 } from "./animations/lower-third-18/LowerThird18";
 import { LowerThird19 } from "./animations/lower-third-19/LowerThird19";
+import { LowerThird20 } from "./animations/lower-third-20/LowerThird20";
 
 export const Root: React.FC = () => {
   return (
@@ -534,6 +535,28 @@ export const Root: React.FC = () => {
       <Composition
         id="LowerThird19"
         component={LowerThird19}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird20 - Kinetic split screen with glitch effect
+        - Split screen design with top dark panel and bottom accent panel
+        - Panels slide in from opposite directions with kinetic energy
+        - Primary text slides from left, secondary from right
+        - Character-by-character kinetic reveal with scale animation
+        - Glitch effect on secondary text during hold phase
+        - Geometric corner brackets with back-ease animation
+        - Diagonal accent lines and grid dots with pulse effect
+        - Electric orange and cyan color scheme
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird20"
+        component={LowerThird20}
         durationInFrames={180}
         fps={30}
         width={1920}
