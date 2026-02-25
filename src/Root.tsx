@@ -26,6 +26,8 @@ import { LowerThird18 } from "./animations/lower-third-18/LowerThird18";
 import { LowerThird19 } from "./animations/lower-third-19/LowerThird19";
 import { LowerThird20 } from "./animations/lower-third-20/LowerThird20";
 
+import { LowerThird21 } from "./animations/lower-third-21/LowerThird21";
+
 export const Root: React.FC = () => {
   return (
     <>
@@ -557,6 +559,26 @@ export const Root: React.FC = () => {
       <Composition
         id="LowerThird20"
         component={LowerThird20}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/*
+        LowerThird21 - Architectural Slide (Corporate)
+        - Strict, flat, corporate design with no rounded corners
+        - Vertical anchor line scales from center
+        - Dark panel slides out masking the text
+        - Primary text and title reveal with upward slide
+        - Amber/Gold accent color
+        - Crisp, professional motion
+        Duration: 6 seconds (180 frames at 30fps)
+      */}
+      <Composition
+        id="LowerThird21"
+        component={LowerThird21}
         durationInFrames={180}
         fps={30}
         width={1920}
