@@ -48,14 +48,14 @@ export const LowerThird21: React.FC = () => {
     frame,
     [TIMING.ENTRANCE_START, TIMING.ENTRANCE_START + TIMING.ENTRANCE_DURATION],
     [0, 1],
-    { extrapolateRight: "clamp", easing: Easing.out(Easing.expo) }
+    { extrapolateRight: "clamp", easing: Easing.out(Easing.exp) }
   );
 
   const exitProgress = interpolate(
     frame,
     [TIMING.EXIT_START, TIMING.EXIT_START + TIMING.EXIT_DURATION],
     [0, 1],
-    { extrapolateRight: "clamp", easing: Easing.in(Easing.expo) }
+    { extrapolateRight: "clamp", easing: Easing.in(Easing.exp) }
   );
 
   // Combine entrance and exit for main elements
@@ -116,7 +116,7 @@ export const LowerThird21: React.FC = () => {
     entranceProgress,
     [0.5, 1],
     [60, 0],
-    { extrapolateRight: "clamp", easing: Easing.out(Easing.back(1.2)) }
+    { extrapolateRight: "clamp", easing: Easing.back(1.2) }
   );
   
   const textOpacity = interpolate(
